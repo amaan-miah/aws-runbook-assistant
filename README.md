@@ -1,39 +1,43 @@
 # AWS RAG Runbook Assistant
 
-A simple **Retrieval-Augmented Generation (RAG)** chatbot built on AWS that answers operational questions using real AWS documentation (runbooks).
+A small proof‑of‑concept project that demonstrates how to build a
+document question‑answering system on AWS using serverless services
+and large language models.
 
-## What it does
-- Takes AWS runbook / troubleshooting documents
-- Embeds them once and stores them
-- Lets a user ask questions via a web UI
-- Retrieves relevant document chunks
-- Uses an LLM to generate grounded answers (no hallucinations)
+## Overview
+The system allows a user to ask operational questions and receive
+answers grounded in real AWS documentation (runbooks and
+troubleshooting guides).
+
+Documents are embedded ahead of time and stored. At query time,
+relevant sections are retrieved and provided to an LLM to generate
+the response.
 
 ## Architecture
-- **Frontend:** Static HTML + JavaScript
-- **API:** Amazon API Gateway
-- **Backend:** AWS Lambda (Python)
-- **Embeddings:** Amazon Bedrock (Titan)
-- **Storage:** Amazon S3
-- **LLM:** Claude (via API)
+- Frontend: Static HTML + JavaScript
+- API: Amazon API Gateway
+- Backend: AWS Lambda (Python)
+- Embeddings: Amazon Bedrock (Titan)
+- Storage: Amazon S3
+- Language model: Claude (via API)
 
 Flow:
-User → API Gateway → Lambda → Bedrock embeddings → S3 retrieval → LLM → Response
+User → API Gateway → Lambda → embedding + retrieval → LLM → response
 
-## Why this project
-Internal documentation is hard to search during incidents.  
-This project is a proof‑of‑concept **internal runbook assistant** for cloud / DevOps teams.
+## Purpose
+The goal of this project was to understand how retrieval‑augmented
+generation systems are built and deployed using AWS services,
+rather than to create a production‑ready application.
 
-## Status
-- ✅ End‑to‑end pipeline working
-- ✅ Serverless, minimal infrastructure
-- ⚠️ Proof of concept (not production‑hardened)
+## Current state
+- End‑to‑end pipeline implemented
+- Serverless and minimal infrastructure
+- Intended as a learning and demonstration project
 
-## Future improvements
-- Vector database instead of S3
-- Authentication
-- Event‑driven document ingestion
-- Better UI
+## Possible next steps
+- Use a dedicated vector database
+- Add authentication and access control
+- Improve ingestion and document updates
+- Add basic monitoring and logging
 
-## Notes
 Built as a learning project for AWS Summit London.
