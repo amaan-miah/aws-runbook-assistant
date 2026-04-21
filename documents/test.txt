@@ -1,0 +1,5 @@
+Digital Richard knows everything Skellett knows. He was built as a small language model which used ChatGPT to digest all of Richard's meetings, calls, documents, presentations and more. It was then refined to follow Skellett's way of thinking and problem solving.
+
+The end product is a text-based window which Skellett can consult, helping him make business decisions and presentation to clients, as part of his work as chief analyst for research and design at technology consultancy Bloor Research.
+
+Digital Richard even helps Skellett manage his personal life, with tabs labelled "family" and "admin" that are off limits to work colleagues, who can otherwise access Digital Richard to ask business-related questions.

@@ -1,0 +1,64 @@
+The incompatible-network state means that the database might still be accessible at the database level but you can't modify or reboot it.
+
+Causes
+The incompatible-network state of your DB instance could be a result of one of the following actions:
+
+Modifying the DB instance class.
+
+Modifying the DB instance to use Multi-AZ DB cluster deployment.
+
+Replacing a host because of a maintenance event.
+
+Launching a replacement DB instance.
+
+Restoring from a snapshot backup.
+
+Starting a DB instance that was stopped.
+
+Resolution
+Use start-db-instance command
+To fix a database that is in an incompatible-network state, follow these instructions:
+
+Open the https://console.aws.amazon.com/rds/ and choose Databases from the navigation pane.
+
+Choose the DB instance that is in the incompatible-network state and note the DB instance identifier, VPC ID, and subnet IDs from the Connectivity & Security tab.
+
+Use the AWS CLI to run the start-db-instance command. Specify the --db-instance-identifier value.
+
+Note
+Running this command when your database is in incompatible mode might cause some downtime.
+
+The start-db-instance command does not resolve this issue for RDS for SQL Server DB instances.
+
+Your database status changes to Available if the command executes successfully.
+
+If your database restarts, the DB instance might execute the last operation run on the instance before it was moved to incompatible-network state. This might move the instance back to the incompatible-network state.
+
+If the start-db-instance command is unsuccessful or the instance moves back to incompatible-network state, open the Databases page in the RDS console and select the database. Navigate to the Logs & events section. The Recent events section displays further resolution steps to follow. The messages are classified as follows:
+
+INTERNAL RESOURCE CHECK: There might be issues with your internal resources.
+
+DNS CHECK: Check DNS resolution and hostnames for the VPC in the VPC console.
+
+ENI CHECK: The elastic network interface (ENI) for your database might not exist.
+
+GATEWAY CHECK: The internet gateway for your publicly available database is not attached to the VPC.
+
+IP CHECK: There are no free IP addresses in your subnets.
+
+SECURITY GROUP CHECK: There are no security groups associated with your database or the security groups are invalid.
+
+SUBNET CHECK: There are no valid subnets in your DB subnet group or there are issues with your subnet.
+
+VPC CHECK: The VPC associated with your database is invalid.
+
+Perform point-in-time recovery
+It is best practice to have a backup (snapshot or logical), in case your database enters incompatible-network state. See Introduction to backups. If you turned on automated backups, then temporarily stop any writes to the database and perform a point-in-time recovery.
+
+Note
+After an instance enters the incompatible-network state, the DB instance might not be accessible to perform a logical backup.
+
+If you didn't turn on automated backups, create a new DB instance. Then migrate the data using AWS Database Migration Service (AWS DMS), or by using a backup and restore tool.
+
+If this does not resolve the issue, contact Support for further assistance.
+

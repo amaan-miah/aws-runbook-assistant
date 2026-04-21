@@ -1,0 +1,38 @@
+Your function configuration settings can have an impact on the overall performance and behavior of your Lambda function. These may not cause actual function errors, but can cause unexpected timeouts and results.
+
+The following topics provide troubleshooting advice for common issues that you might encounter related to Lambda function configuration settings.
+
+Topics
+Memory configurations
+
+CPU-bound configurations
+
+Timeouts
+
+Memory configurations
+
+You can configure a Lambda function to use between 128 MB and 10,240 MB of memory. By default, any function created in the console is assigned the smallest amount of memory. Many Lambda functions are performant at this lowest setting. However, if you are importing large code libraries or completing memory intensive tasks, 128 MB is not sufficient.
+
+If your functions are running much slower than expected, the first step is to increase the memory setting. For memory-bound functions, this will resolve the bottleneck and may improve the performance of your function.
+
+CPU-bound configurations
+
+For compute-intensive operations, if your function experiences slower-than-expected performance, this may be due to your function being CPU-bound. In this case, the computational capacity of the function cannot keep pace with the work.
+
+While Lambda doesn't allow you to modify CPU configuration directly, CPU is indirectly controlled via the memory settings. The Lambda service proportionally allocates more virtual CPU as you allocate more memory. At 1.8 GB memory, a Lambda function has an entire vCPU allocated, and above this level it has access to more than one vCPU core. At 10,240MB, it has 6 vCPUs available. In other words, you can improve performance by increasing the memory allocation, even if the function doesn’t use all of the memory.
+
+Timeouts
+
+Timeouts for Lambda functions can be set between 1 and 900 seconds (15 minutes). By default, the Lambda console sets this to 3 seconds. The timeout value is a safety valve that ensures functions do not run indefinitely. After the timeout value is reached, Lambda stops the function invocation.
+
+If a timeout value is set close to the average duration of a function, this increases the risk that the function will time out unexpectedly. The duration of a function can vary based on the amount of data transfer and processing, and the latency of any services the function interacts with. Common causes of timeout include:
+
+When downloading data from S3 buckets or other data stores, the download is larger or takes longer than average.
+
+A function makes a request to another service, which takes longer to respond.
+
+The parameters provided to a function require more computational complexity in the function, which causes the invocation to take longer.
+
+When testing your application, ensure that your tests accurately reflect the size and quantity of data, and realistic parameter values. Importantly, use datasets at the upper bounds of what is reasonably expected for your workload.
+
+Additionally, implement upper-bound limits in your workload wherever practical. In this example, the application could use a maximum size limit for each file type. You can then test the performance of your application for a range of expected file sizes, up to and including the maximum limits.
