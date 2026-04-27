@@ -16,7 +16,7 @@ Point it at your own documents by dropping `.txt` files into the `documents/` fo
 
 ## Architecture
 
-![Architecture](architecture.svg)
+![Architecture](project_architecture.svg)
 
 User → API Gateway → Lambda (Python) → Bedrock Titan embeddings → cosine similarity → S3 vector store → Claude → response
 
